@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://root.gd" type="Script" id=1]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Arrow.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Gate.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Bird.tscn" type="PackedScene" id=5]
 
 [sub_resource type="PlaneMesh" id=1]
 
@@ -65,7 +68,7 @@ _sections_unfolded = [ "Albedo", "Detail", "Roughness" ]
 
 extents = Vector3( 1000, 1, 1000 )
 
-[node name="root" type="Spatial"]
+[node name="root" type="Spatial" index="0"]
 
 script = ExtResource( 1 )
 
@@ -97,14 +100,19 @@ directional_shadow_depth_range = 0
 directional_shadow_max_distance = 200.0
 _sections_unfolded = [ "Shadow", "Transform" ]
 
-[node name="Player" parent="." index="1" instance=ExtResource( 2 )]
+[node name="Arrow" parent="." index="1" instance=ExtResource( 2 )]
+
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.26618, 0 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="Player" parent="." index="2" instance=ExtResource( 3 )]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Camera" type="Camera" parent="Player" index="3"]
 
-transform = Transform( 1, 0, 0, 0, 0.869491, 0.493948, 0, -0.493948, 0.869491, 0, 3.0519, 4.05456 )
+transform = Transform( 1, 0, 0, 0, 0.869491, 0.493948, 0, -0.493948, 0.869491, 0, 5.62653, 7.76289 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
@@ -118,7 +126,7 @@ size = 1.0
 near = 0.05
 far = 100000.0
 
-[node name="StaticBody" type="StaticBody" parent="." index="2"]
+[node name="StaticBody" type="StaticBody" parent="." index="3"]
 
 input_ray_pickable = true
 input_capture_on_drag = false
@@ -150,5 +158,38 @@ _sections_unfolded = [ "Transform", "material" ]
 shape = SubResource( 3 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
+
+[node name="Gates" type="Spatial" parent="." index="4"]
+
+editor/display_folded = true
+
+[node name="Gate1" parent="Gates" index="0" instance=ExtResource( 4 )]
+
+transform = Transform( 0.820971, 0, -0.57097, 0, 1, 0, 0.57097, 0, 0.820971, 37.6813, 9.39427, -35.4429 )
+
+[node name="Gate2" parent="Gates" index="1" instance=ExtResource( 4 )]
+
+transform = Transform( 0.999702, 0, -0.0244118, 0, 1, 0, 0.0244118, 0, 0.999702, 39.8781, 16.3906, -137.084 )
+
+[node name="Gate3" parent="Gates" index="2" instance=ExtResource( 4 )]
+
+transform = Transform( 0.891486, 0, 0.453048, 0, 1, 0, -0.453048, 0, 0.891486, -32.2443, 41.8575, -214.851 )
+
+[node name="Gate4" parent="Gates" index="3" instance=ExtResource( 4 )]
+
+transform = Transform( -0.152817, 0, 0.988254, 0, 1, 0, -0.988254, 0, -0.152817, -150.004, 33.2152, -214.851 )
+
+[node name="Gate5" parent="Gates" index="4" instance=ExtResource( 4 )]
+
+transform = Transform( 0.248911, 0, 0.968526, 0, 1, 0, -0.968526, 0, 0.248911, -215.994, 64.8967, -214.851 )
+
+[node name="Birds" type="Spatial" parent="." index="5"]
+
+visible = false
+_sections_unfolded = [ "Visibility" ]
+
+[node name="Bird" parent="Birds" index="0" instance=ExtResource( 5 )]
+
+transform = Transform( -0.599487, 0, -0.800385, 0, 1, 0, 0.800385, 0, -0.599487, 17.3502, 6.3603, 0 )
 
 

@@ -5,11 +5,13 @@ extends KinematicBody
 # var b = "textvar"
 var fire
 var lift
+const UP = Vector3(0,1,0)
 const LIFT = 0.1
 const MAX_LIFT = 10
 const MAX_DESCEND = -10
-const WIND_MAG = 5
-const CLINE_SZ = 7
+const WIND_MAG = 4
+const WIND_LEVEL = 15.0
+const COOLING = 0.005
 var wind_stack
 var flag
 var thrower 
@@ -20,16 +22,13 @@ func _ready():
 	flag = $FlagPivot
 	thrower = $Flamethrower
 	
-	# different wind at each altitude
-	wind_stack = []
-	for i in range(50):
-		wind_stack.append(Vector2(0.5-randf(),0.5-randf()) * (randf() * WIND_MAG ) )
-	
 func _physics_process(delta):
 
 	var m = get_viewport().get_mouse_position()
 	var x = 0.5 - (m.x / get_viewport().size.x)
-	thrower.rotation.y = deg2rad(x*360)
+	var y = 0.5 - (m.y / get_viewport().size.y)
+	thrower.rotation.y = deg2rad(x*-360)
+	thrower.rotation.x = deg2rad(45-y*90 - 45)
 	thrower.emitting = Input.is_action_pressed("fire")
 		
 	
@@ -39,6 +38,9 @@ func _physics_process(delta):
 			lift = MAX_LIFT 
 		fire.light_energy = 16
 	else:
+		lift -= COOLING * delta
+		if lift < MAX_DESCEND:
+			lift = MAX_DESCEND
 		fire.light_energy = 0
 		
 	if Input.is_action_pressed("hole"):
@@ -52,15 +54,20 @@ func _physics_process(delta):
 	
 	var v = Vector3(0,lift,0)
 	
-	# Apply wind based on altitude
-	var wind = wind_stack[floor(translation.y / CLINE_SZ)] * delta
-	var wind_dir = Vector3(wind.x,0,wind.y).angle_to(Vector3(1,0,0))
-	flag.rotation.y = wind_dir
-	v += Vector3(wind.x,0,wind.y)
+	# Apply wind based on altitude (clockwise to the right)
+	var w = ( translation.y - floor(translation.y / WIND_LEVEL) * WIND_LEVEL ) / WIND_LEVEL
+	var wind_angle = deg2rad( w * -360 )
+	var wind_m = WIND_MAG
+	if translation.y < WIND_LEVEL:
+		wind_m *= clamp(log(translation.y/WIND_LEVEL)/2+1,0,1)
+	var wind = Vector3(1,0,0).rotated(UP,wind_angle) * wind_m * delta
+	flag.rotation.y = wind_angle
+	v += wind
 	
 	# maybe reposition camera on altitude?
 	
 	var c = move_and_collide(v)
 	if c != null:
 		lift = 0
+		
 	
