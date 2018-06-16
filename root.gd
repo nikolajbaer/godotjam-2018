@@ -12,9 +12,13 @@ const UP = Vector3(0,1,0)
 var target
 var arrow
 var player
+var bird_scene
+var b
 
 func _ready():
+	b = 0
 	var tree_scene =  load("res://Tree.tscn")
+	bird_scene = load("res://Bird.tscn")
 	for i in range(500):
 		var t = tree_scene.instance()
 		t.translation = Vector3(250-randf()*500,0,250-randf()*500)
@@ -34,14 +38,27 @@ func _ready():
 	arrow = $Arrow
 	arrow.visible = true
 
+
 func _process(delta):
 	if target != null:
 		arrow.look_at_from_position(player.translation,target.translation,UP)
+	$Control/Label.text = "Altitude: %sm" % int(player.translation.y)
 
 func _gate_hit(n):
 	target = $Gates.get_node("Gate%s"%n)
 	if target != null:
 		target.visible = true
+		spawn_bird(50-randf()*100,randf()*50,randf()*100)
 	else:
 		# Win? s
 		pass
+
+func spawn_bird(x,y,z):
+	var bird = bird_scene.instance()
+	bird.name = "Bird%s"%b
+	b += 1
+	bird.translation = Vector3(x,y,z)
+	bird.look_at(player.translation,UP)
+	bird.target = player
+	$Birds.add_child(bird)
+	

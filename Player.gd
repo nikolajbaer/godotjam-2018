@@ -12,15 +12,18 @@ const MAX_DESCEND = -10
 const WIND_MAG = 4
 const WIND_LEVEL = 15.0
 const COOLING = 0.005
+const CEILING = 200
 var wind_stack
 var flag
 var thrower 
+var ray
 
 func _ready():
 	fire = $Fire
 	lift = 0
 	flag = $FlagPivot
 	thrower = $Flamethrower
+	ray = $Flamethrower/RayCast
 	
 func _physics_process(delta):
 
@@ -30,7 +33,6 @@ func _physics_process(delta):
 	thrower.rotation.y = deg2rad(x*-360)
 	thrower.rotation.x = deg2rad(45-y*90 - 45)
 	thrower.emitting = Input.is_action_pressed("fire")
-		
 	
 	if Input.is_action_pressed("up"):
 		lift += LIFT * delta
@@ -52,6 +54,10 @@ func _physics_process(delta):
 		# Unclip Sphere?
 		pass
 	
+	# cap the max altitude
+	if translation.y > CEILING and lift > 0:
+		lift = 0
+	
 	var v = Vector3(0,lift,0)
 	
 	# Apply wind based on altitude (clockwise to the right)
@@ -65,9 +71,20 @@ func _physics_process(delta):
 	v += wind
 	
 	# maybe reposition camera on altitude?
-	
+
 	var c = move_and_collide(v)
 	if c != null:
 		lift = 0
+
+
+func _on_Area_area_entered(area):
+	if thrower.emitting and "Bird" in area.name:
+		area.hit()
+
+func hit():
+	health -= 10
+	if health < 0:
+		# explode!
+		pass
 		
-	
+		
