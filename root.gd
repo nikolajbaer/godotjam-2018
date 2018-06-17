@@ -14,9 +14,13 @@ var arrow
 var player
 var bird_scene
 var b
+var explode_scene
+var explosions
 
 func _ready():
 	b = 0
+	explode_scene = load("res://Explosion.tscn")
+	explosions = $Explosions
 	var tree_scene =  load("res://Tree.tscn")
 	bird_scene = load("res://Bird.tscn")
 	for i in range(500):
@@ -38,11 +42,17 @@ func _ready():
 	arrow = $Arrow
 	arrow.visible = true
 
+func explode(pos):
+	var e = explode_scene.instance()
+	e.translation = pos
+	explosions.add_child(e)
+	e.emitting = true
 
 func _process(delta):
 	if target != null:
 		arrow.look_at_from_position(player.translation,target.translation,UP)
 	$Control/Label.text = "Altitude: %sm" % int(player.translation.y)
+	$Control/Label.text = "Health: %sm" % int(player.health)
 
 func _gate_hit(n):
 	target = $Gates.get_node("Gate%s"%n)

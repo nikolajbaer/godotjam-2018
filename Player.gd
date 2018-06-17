@@ -17,8 +17,10 @@ var wind_stack
 var flag
 var thrower 
 var ray
+var health
 
 func _ready():
+	health = 100
 	fire = $Fire
 	lift = 0
 	flag = $FlagPivot
@@ -78,13 +80,17 @@ func _physics_process(delta):
 
 
 func _on_Area_area_entered(area):
-	if thrower.emitting and "Bird" in area.name:
+	if thrower.emitting and "Bird" in area.name or "Mine" in area.name:
 		area.hit()
 
+func explode():
+	pass
+
 func hit():
-	health -= 10
+	health -= 50
 	if health < 0:
-		# explode!
-		pass
+		get_tree().root.get_node("root").explode(translation)
+		queue_free()
+		# TODO show new scene!
 		
 		

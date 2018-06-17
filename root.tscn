@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://root.gd" type="Script" id=1]
 [ext_resource path="res://Arrow.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://default_env.tres" type="Environment" id=4]
 [ext_resource path="res://Gate.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Mine.tscn" type="PackedScene" id=6]
 
 [sub_resource type="PlaneMesh" id=1]
 
@@ -68,7 +69,7 @@ _sections_unfolded = [ "Albedo", "Detail", "Roughness" ]
 
 extents = Vector3( 1000, 1, 1000 )
 
-[node name="root" type="Spatial"]
+[node name="root" type="Spatial" index="0"]
 
 script = ExtResource( 1 )
 
@@ -108,6 +109,27 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[node name="Label2" type="Label" parent="Control" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 4.0
+margin_top = 28.0
+margin_right = 78.0
+margin_bottom = 42.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Health: 100"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 [node name="DirectionalLight" type="DirectionalLight" parent="." index="1"]
 
 transform = Transform( 0.348257, -0.781369, 0.51786, 0, 0.552444, 0.83355, -0.937399, -0.29029, 0.192392, 0, 21.7172, 0 )
@@ -143,6 +165,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="Player" parent="." index="3" instance=ExtResource( 3 )]
 
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 _sections_unfolded = [ "Transform" ]
 
@@ -164,6 +187,7 @@ far = 500.0
 
 [node name="StaticBody" type="StaticBody" parent="." index="4"]
 
+editor/display_folded = true
 input_ray_pickable = true
 input_capture_on_drag = false
 collision_layer = 1
@@ -197,6 +221,8 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Gates" type="Spatial" parent="." index="5"]
 
+editor/display_folded = true
+
 [node name="Gate1" parent="Gates" index="0" instance=ExtResource( 5 )]
 
 transform = Transform( 0.820971, 0, -0.57097, 0, 1, 0, 0.57097, 0, 0.820971, 37.6813, 9.39427, -35.4429 )
@@ -215,10 +241,96 @@ transform = Transform( 0.618195, 0, 0.786024, 0, 1, 0, -0.786024, 0, 0.618195, -
 
 [node name="Gate5" parent="Gates" index="4" instance=ExtResource( 5 )]
 
-transform = Transform( 0.64264, 0, 0.766168, 0, 1, 0, -0.766168, 0, 0.64264, -215.994, 27.2017, -214.851 )
+transform = Transform( 0.639323, 0, 0.768938, 0, 1, 0, -0.768938, 0, 0.639323, -215.994, 27.2017, -214.851 )
 
 [node name="Birds" type="Spatial" parent="." index="6"]
 
 _sections_unfolded = [ "Visibility" ]
+
+[node name="Mines" type="Spatial" parent="." index="7"]
+
+editor/display_folded = true
+
+[node name="Mine" parent="Mines" index="0" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 33.2673, 17.3811, -53.3999 )
+
+[node name="Mine2" parent="Mines" index="1" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 53.1168, 11.9101, -85.2052 )
+
+[node name="Mine3" parent="Mines" index="2" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 41.5295, 24.0041, -85.2052 )
+
+[node name="Mine4" parent="Mines" index="3" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 29.409, 22.4456, -153.492 )
+
+[node name="Mine5" parent="Mines" index="4" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5828, 17.9847, -164.047 )
+
+[node name="Mine6" parent="Mines" index="5" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.7529, 40.5219, -212.356 )
+
+[node name="Mine19" parent="Mines" index="6" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -36.6235, 35.6031, -195.524 )
+
+[node name="Mine20" parent="Mines" index="7" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -48.0195, 35.6031, -217.308 )
+
+[node name="Mine7" parent="Mines" index="8" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29.0929, 50.6479, -212.356 )
+
+[node name="Mine8" parent="Mines" index="9" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -104.788, 50.6479, -238.567 )
+
+[node name="Mine9" parent="Mines" index="10" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -128.603, 43.2769, -238.567 )
+
+[node name="Mine10" parent="Mines" index="11" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -144.671, 43.2769, -203.254 )
+
+[node name="Mine11" parent="Mines" index="12" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -134.14, 29.5622, -203.254 )
+
+[node name="Mine12" parent="Mines" index="13" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -169.065, 29.5622, -228.698 )
+
+[node name="Mine13" parent="Mines" index="14" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -157.134, 43.1911, -228.698 )
+
+[node name="Mine14" parent="Mines" index="15" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -157.134, 25.0554, -222.823 )
+
+[node name="Mine15" parent="Mines" index="16" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -205.411, 25.0554, -222.823 )
+
+[node name="Mine16" parent="Mines" index="17" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.128, 34.7115, -204.085 )
+
+[node name="Mine17" parent="Mines" index="18" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.128, 41.4018, -231.624 )
+
+[node name="Mine18" parent="Mines" index="19" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.128, 30.6279, -219.165 )
+
+[node name="Explosions" type="Spatial" parent="." index="8"]
 
 
