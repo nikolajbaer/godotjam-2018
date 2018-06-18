@@ -1,8 +1,6 @@
 extends KinematicBody
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+export (bool) var active
 var fire
 var lift
 const UP = Vector3(0,1,0)
@@ -18,6 +16,7 @@ var flag
 var thrower 
 var ray
 var health
+var tween
 
 func _ready():
 	health = 100
@@ -25,10 +24,10 @@ func _ready():
 	lift = 0
 	flag = $FlagPivot
 	thrower = $Flamethrower
-	ray = $Flamethrower/RayCast
+	tween = $Fire/Tween
 	
 func _physics_process(delta):
-
+	if not active: return
 	var m = get_viewport().get_mouse_position()
 	var x = 0.5 - (m.x / get_viewport().size.x)
 	var y = 0.5 - (m.y / get_viewport().size.y)
@@ -45,8 +44,9 @@ func _physics_process(delta):
 		lift -= COOLING * delta
 		if lift < MAX_DESCEND:
 			lift = MAX_DESCEND
-		fire.light_energy = 0
-		
+		if fire.light_energy > 0:
+			fire.light_energy -= 1		
+				
 	if Input.is_action_pressed("hole"):
 		lift -= LIFT * delta
 		if lift < MAX_DESCEND:
@@ -87,10 +87,13 @@ func explode():
 	pass
 
 func hit():
-	health -= 50
+	health -= 49
+	print ("deducting health")
 	if health < 0:
 		get_tree().root.get_node("root").explode(translation)
-		queue_free()
+		get_tree().root.get_node("root").failure()
+		active = false
+		visible = false
 		# TODO show new scene!
 		
 		

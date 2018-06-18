@@ -1,13 +1,7 @@
 extends Spatial
 
 # TODO
-# wind clockwise change with altitude
-# progressively lose lift as balloon cools
-# Add mockingbirds
-# Add path
-# Add spike mines
 # Add finish
-# vertical control of 'thrower
 const UP = Vector3(0,1,0)
 var target
 var arrow
@@ -16,8 +10,10 @@ var bird_scene
 var b
 var explode_scene
 var explosions
+var retry
 
 func _ready():
+	retry = false
 	b = 0
 	explode_scene = load("res://Explosion.tscn")
 	explosions = $Explosions
@@ -49,10 +45,13 @@ func explode(pos):
 	e.emitting = true
 
 func _process(delta):
+	if retry and Input.is_action_pressed("fire"):
+		get_tree().change_scene("res://Intro.tscn")
+		
 	if target != null:
 		arrow.look_at_from_position(player.translation,target.translation,UP)
 	$Control/Label.text = "Altitude: %sm" % int(player.translation.y)
-	$Control/Label.text = "Health: %sm" % int(player.health)
+	$Control/Label2.text = "Health: %sm" % int(player.health)
 
 func _gate_hit(n):
 	target = $Gates.get_node("Gate%s"%n)
@@ -60,12 +59,20 @@ func _gate_hit(n):
 		target.visible = true
 		spawn_bird(50-randf()*100,randf()*50,randf()*100)
 	else:
-		# Win? s
-		pass
+		success()
+
+func success():
+	player.active = false
+	$Control/Success.visible = true
+	
+func failure():
+	$Control/TryAgain.visible = true
+	retry = true
 
 func spawn_bird(x,y,z):
 	var bird = bird_scene.instance()
 	bird.name = "Bird%s"%b
+	bird.active = true
 	b += 1
 	bird.translation = Vector3(x,y,z)
 	bird.look_at(player.translation,UP)

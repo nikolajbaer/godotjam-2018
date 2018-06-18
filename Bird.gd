@@ -1,8 +1,6 @@
 extends Area
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+export (bool) var active
 var anim
 var target
 var velocity
@@ -22,7 +20,7 @@ func trigger_hit():
 	visible = false
 
 func _physics_process(delta):
-		
+	if not active: return
 	if target != null and not was_hit:
 		var v = target.translation - translation
 		velocity = velocity.linear_interpolate( v, TURN_SPEED )

@@ -9,6 +9,7 @@ func hit():
 	explode()
 
 func _on_Mine_body_entered(body):
+	print("Hit %s"%body.name)
 	if body.name == "Player":
 		body.hit()
 	explode()

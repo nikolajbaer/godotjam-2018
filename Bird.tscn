@@ -142,7 +142,7 @@ proximity_fade_enable = false
 distance_fade_enable = false
 _sections_unfolded = [ "Albedo", "Roughness", "Vertex Color" ]
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 
 resource_name = "coasting"
 length = 1.0
@@ -173,7 +173,7 @@ tracks/1/keys = {
 "values": [ Vector3( 0, -180, -20 ) ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 
 resource_name = "dead"
 length = 1.0
@@ -204,9 +204,8 @@ tracks/1/keys = {
 "values": [ Vector3( 0, 250, 0 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=10]
 
-resource_name = "flapping"
 length = 1.0
 loop = true
 step = 0.1
@@ -235,7 +234,7 @@ tracks/1/keys = {
 "values": [ Vector3( 0, 0, -20 ), Vector3( 0, 0, 45 ) ]
 }
 
-[node name="Bird" type="Area" index="0"]
+[node name="Bird" type="Area"]
 
 transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0 )
 input_ray_pickable = true
@@ -260,6 +259,7 @@ reverb_bus_amount = 0.0
 reverb_bus_uniformity = 0.0
 script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "Transform" ]
+active = false
 
 [node name="Tail" type="MeshInstance" parent="." index="0"]
 
@@ -281,7 +281,7 @@ _sections_unfolded = [ "Transform", "material" ]
 [node name="WingPivotR" type="Spatial" parent="." index="1"]
 
 editor/display_folded = true
-transform = Transform( 0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, -0.17934, 0, 0.118488 )
+transform = Transform( 0.939692, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0, 1, -0.17934, 0, 0.118488 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Wing" type="MeshInstance" parent="WingPivotR" index="0"]
@@ -304,7 +304,7 @@ _sections_unfolded = [ "Transform", "material" ]
 [node name="WingPivotL" type="Spatial" parent="." index="2"]
 
 editor/display_folded = true
-transform = Transform( -0.34202, 0, -0.939693, 0, 1, 0, 0.939693, 0, -0.34202, 0.213868, 0, 0.118488 )
+transform = Transform( -0.939693, -0.34202, 8.74228e-08, -0.34202, 0.939693, 0, -8.21506e-08, -2.99004e-08, -1, 0.213868, 0, 0.118488 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Wing" type="MeshInstance" parent="WingPivotL" index="0"]
@@ -369,9 +369,9 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/coasting = SubResource( 9 )
-anims/dead = SubResource( 10 )
-anims/flapping = SubResource( 8 )
+anims/coasting = SubResource( 8 )
+anims/dead = SubResource( 9 )
+anims/flapping = SubResource( 10 )
 blend_times = [  ]
 
 [connection signal="body_entered" from="." to="." method="_on_Bird_body_entered"]
