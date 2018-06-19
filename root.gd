@@ -51,7 +51,7 @@ func _process(delta):
 	if target != null:
 		arrow.look_at_from_position(player.translation,target.translation,UP)
 	$Control/Label.text = "Altitude: %sm" % int(player.translation.y)
-	$Control/Label2.text = "Health: %sm" % int(player.health)
+	$Control/Label2.text = "Health: %s/100" % int(player.health)
 
 func _gate_hit(n):
 	target = $Gates.get_node("Gate%s"%n)
@@ -79,3 +79,6 @@ func spawn_bird(x,y,z):
 	bird.target = player
 	$Birds.add_child(bird)
 	
+
+func _on_Timer_timeout():
+	$Control/Help.visible = false

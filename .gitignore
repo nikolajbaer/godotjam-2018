@@ -2,3 +2,4 @@ icon*
 .import*
 *.import
 *~
+.DS_Store

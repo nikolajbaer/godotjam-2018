@@ -146,6 +146,34 @@ position = Vector2( 518.552, 295.886 )
 texture = ExtResource( 3 )
 _sections_unfolded = [ "Visibility" ]
 
+[node name="Help" type="Label" parent="Control" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 95.0
+margin_top = 569.0
+margin_right = 753.0
+margin_bottom = 583.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "w /s goes up/down, mouse1 / mouse to fire flamethrower. Remember, altitude changes wind direction!"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Timer" type="Timer" parent="Control" index="5"]
+
+process_mode = 1
+wait_time = 15.0
+one_shot = true
+autostart = true
+
 [node name="DirectionalLight" type="DirectionalLight" parent="." index="1"]
 
 transform = Transform( 0.348257, -0.781369, 0.51786, 0, 0.552444, 0.83355, -0.937399, -0.29029, 0.192392, 0, 21.7172, 0 )
@@ -348,5 +376,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.128, 41.4018, -231.624 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.128, 30.6279, -219.165 )
 
 [node name="Explosions" type="Spatial" parent="." index="8"]
+
+[connection signal="timeout" from="Control/Timer" to="." method="_on_Timer_timeout"]
 
 
