@@ -11,6 +11,7 @@ var b
 var explode_scene
 var explosions
 var retry
+var started = false
 
 func _ready():
 	retry = false
@@ -45,6 +46,9 @@ func explode(pos):
 	e.emitting = true
 
 func _process(delta):
+	if Input.is_action_pressed("up") and not started:
+		$Control/explainer.visible = false
+		started = true
 	if retry and Input.is_action_pressed("fire"):
 		get_tree().change_scene("res://Intro.tscn")
 		
@@ -82,3 +86,4 @@ func spawn_bird(x,y,z):
 
 func _on_Timer_timeout():
 	$Control/Help.visible = false
+

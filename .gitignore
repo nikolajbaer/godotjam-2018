@@ -3,3 +3,7 @@ icon*
 *.import
 *~
 .DS_Store
+*.appx
+*.pck
+*.dmg
+*.x86_64
